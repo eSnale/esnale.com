@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Confirmation</title>
+
+<style>
+  input[type="text"] {
+    text-align: right;
+  }
+
+  input[type="text"]::placeholder {
+    text-align: right;
+  }
+
+body {
+background:
+linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0.75)),
+url('tile.jfif');
+background-repeat: repeat;
+background-size: 300px 300px;
+background-color: #f2f2f2;
+}
+
+</style>
+
+
+</head>
+
+<body>
+  <p id="result"></p>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+
+    const name = params.get("name");
+    const email = params.get("email");
+
+    const chessProblemsChecked   = params.get("chess_problems") === "yes";
+    const cryptoquotesChecked    = params.get("cryptoquotes") === "yes";
+    const diagonalSamuraiChecked = params.get("diagonal_samurai") === "yes";
+    const diagonalSudokuChecked  = params.get("diagonal_sudoku") === "yes";
+    const minesweeperChecked     = params.get("minesweeper") === "yes";
+    const samuraiSudokuChecked   = params.get("samurai_sudoku") === "yes";
+    const sudokuChecked          = params.get("sudoku") === "yes";
+
+    const results = [];
+
+    if (chessProblemsChecked) {
+      results.push("Chess Problems");
+    }
+
+    if (cryptoquotesChecked) {
+      results.push("CryptoQuote");
+    }
+
+    if (diagonalSamuraiChecked) {
+      results.push("Diagonal Samurai");
+    }
+
+    if (diagonalSudokuChecked) {
+      results.push("Diagonal Sudoku");
+    }
+
+    if (minesweeperChecked) {
+      results.push("Minesweeper");
+    }
+
+    if (samuraiSudokuChecked) {
+      results.push("Samurai Sudoku");
+    }
+
+    if (sudokuChecked) {
+      results.push("Sudoku");
+    }
+
+    const now = new Date();
+    const nextMonth = new Date(now.getFullYear(), now.getMonth() + 1, 1)
+      .toLocaleString("en-US", { month: "long" });
+
+    if (results.length === 0) {
+      document.getElementById("result").innerHTML =
+        "No products selected.<br>Please click your browser's ''Back'' button and choose which puzzles you'd like to order.<br><br>" + name;
+    } else {
+      let puzzleList = "";
+
+      if (results.length === 1) {
+        puzzleList = results[0];
+      } else if (results.length === 2) {
+        puzzleList = results[0] + " and " + results[1];
+      } else {
+        puzzleList = results.slice(0, -1).join(", ") + ", and " + results[results.length - 1];
+      }
+
+      document.getElementById("result").innerHTML =
+        "Order placed!<p>Your " +
+        puzzleList + " puzzles will be shipped on " + nextMonth + " 1st!<p>*If the 1st falls on a Sunday and/or holiday, your puzzles will ship on the following business day instead.";
+    }
+  if (results.length > 0) {
+    const message =
+      "Name: " + name + "\n" +
+      "Email: " + email + "\n\n" +
+      "Selected Puzzles:\n" + results.join(", ") + "\n\n" +
+      "Your " + results.join(", ") + " puzzles will be shipped on " + nextMonth + " 1st.";
+
+    const subject = "Puzzle Order Confirmation";
+
+    const mailtoLink =
+      "mailto:" + email + ",esnale@esnale.com" +
+      "?subject=" + encodeURIComponent(subject) +
+      "&body=" + encodeURIComponent(message);
+
+    window.location.href = mailtoLink;
+  }
+  </script>
+</body>
+</html>

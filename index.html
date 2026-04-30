@@ -6,7 +6,49 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>eSnale Order Form</title>
 
-  <style>
+<style>
+
+input[type="checkbox"] {
+  appearance: none;
+  width: .95em;
+  height: .95em;
+  border: 1px solid #999;
+  border-radius: 3px;
+  background-color: white;
+  cursor: pointer;
+  position: relative;
+}
+
+/* checked state */
+input[type="checkbox"]:checked {
+  background-color: #4a90e2;
+  border-color: #4a90e2;
+}
+
+/* checkmark */
+input[type="checkbox"]:checked::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 5px;
+  width: 3px;
+  height: 8px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+/* disabled state */
+input[type="checkbox"]:disabled {
+  background-color: #b0b0b0;
+  border-color: #999;
+  cursor: not-allowed;
+}
+
+/* disabled + checked */
+input[type="checkbox"]:disabled:checked {
+  background-color: #8a8a8a;
+}
 
 input[type="text"] {
     text-align: right;
@@ -42,7 +84,7 @@ div > div[style*="display: flex"] {
   margin-left: 9px;
 }
 
-  </style>
+</style>
 </head>
 
 <body>
@@ -51,7 +93,7 @@ div > div[style*="display: flex"] {
 
 <br>
 <font size=6>Welcome!</font>
-<p style="text-align:justify; margin-top: 0px;">eSnale offers monthly pencil-and-paper puzzle packs to inmates in the state of Colorado, and our goal is to distribute to prison facilities throughout the rest of the country as well.&nbsp;&nbsp;Each pack is $5.00, which covers shipping, and contains 36 double-sided sheets, including instructions.&nbsp;&nbsp;Please limit orders to one pack per inmate per month.&nbsp;&nbsp;Please also feel free to <a href="mailto:esnale@esnale.com?subject=Question%20for%20eSnale">contact us</a> with any questions.</p>
+<p style="text-align:justify; margin-top: 0px;">eSnale offers monthly pencil-and-paper puzzle packs to inmates in the state of Colorado, and our goal is to distribute to prison facilities throughout the rest of the country as well.&nbsp;&nbsp;Each pack is $5.00, which covers shipping, and contains 36 double-sided sheets, including instructions.&nbsp;&nbsp;Please limit orders to one pack per inmate per month, and feel free to <a href="mailto:esnale@esnale.com?subject=Question%20for%20eSnale">contact us</a> with any questions.</p>
 
 <div style="margin-bottom: 20px;">
   <label style="display: flex; align-items: flex-start; gap: 5px; white-space: normal; width: 100%;">
@@ -67,7 +109,7 @@ div > div[style*="display: flex"] {
 <hr size=3 color=black>
 
 <font size=6>Step 1: Choose Puzzles</font>
-<p style="text-align:justify; margin-top: 0px;">Any number of puzzle types you choose will be distributed as evenly as possible among the 36-sheet puzzle pack (for example: choosing three different puzzle types will yield 12 pages' worth of each).</p>
+<p style="text-align:justify; margin-top: 0px;">Any number of puzzle types you choose will be distributed as evenly as possible among the 36-sheet puzzle pack.&nbsp;&nbsp;Please note that some puzzles are not available in every difficulty.&nbsp;&nbsp;Click on any of the puzzle names for a printable free sample!</p>
 
 <form action="08a.html" method="GET">
 
@@ -77,10 +119,10 @@ div > div[style*="display: flex"] {
   <!-- Header row -->
   <div style="display: grid; grid-template-columns: auto repeat(4, 64px); align-items: center; justify-items: center;">
     <div></div>
-    <div>Easy</div>
-    <div>Medium</div>
-    <div>Hard</div>
-    <div>Expert</div>
+    <div><b>Easy</b></div>
+    <div><b>Medium</b></div>
+    <div><b>Hard</b></div>
+    <div><b>Expert</b></div>
   </div>
 
   <!-- Row: Bōgle -->
@@ -88,13 +130,13 @@ div > div[style*="display: flex"] {
     <div style="justify-self: end; text-align: right;">
       <a href="samples/bogle.pdf" target="_blank">Bōgle</a>
     </div>
-    <input type="checkbox" name="bogle_easy" onchange="checkPuzzleSelection()">
+    <input type="checkbox" name="bogle_easy" disabled>
     <input type="checkbox" name="bogle_medium" onchange="checkPuzzleSelection()">
-    <input type="checkbox" name="bogle_hard" onchange="checkPuzzleSelection()">
-    <input type="checkbox" name="bogle_expert" onchange="checkPuzzleSelection()">
+    <input type="checkbox" name="bogle_hard" disabled>
+    <input type="checkbox" name="bogle_expert" disabled>
   </div>
 
-  <!-- Row: Chess -->
+  <!-- Row: Chess Problems -->
   <div style="display: grid; grid-template-columns: auto repeat(4, 64px); align-items: center; justify-items: center;">
     <div style="justify-self: end; text-align: right;">
       <a href="samples/chessproblems.pdf" target="_blank">Chess Problems</a>
@@ -102,7 +144,7 @@ div > div[style*="display: flex"] {
     <input type="checkbox" name="chess_easy" onchange="checkPuzzleSelection()">
     <input type="checkbox" name="chess_medium" onchange="checkPuzzleSelection()">
     <input type="checkbox" name="chess_hard" onchange="checkPuzzleSelection()">
-    <input type="checkbox" name="chess_expert" onchange="checkPuzzleSelection()">
+    <input type="checkbox" name="chess_expert" disabled>
   </div>
 
   <!-- Row: CryptoQuotes -->
@@ -176,10 +218,10 @@ div > div[style*="display: flex"] {
     <div style="justify-self: end; text-align: right;">
       <a href="samples/picross.pdf" target="_blank">Picross</a>
     </div>
-    <input type="checkbox" name="picross_easy" onchange="checkPuzzleSelection()">
-    <input type="checkbox" name="picross_medium" onchange="checkPuzzleSelection()">
+    <input type="checkbox" name="picross_easy" disabled>
+    <input type="checkbox" name="picross_medium" disabled>
     <input type="checkbox" name="picross_hard" onchange="checkPuzzleSelection()">
-    <input type="checkbox" name="picross_expert" onchange="checkPuzzleSelection()">
+    <input type="checkbox" name="picross_expert" disabled>
   </div>
 
   <!-- Row: Samurai -->
@@ -373,7 +415,7 @@ div > div[style*="display: flex"] {
   <label style="display: flex; align-items: flex-start; gap: 5px; width: 100%;">
     <input type="checkbox" id="same_as_billing" onchange="handleSameAsBilling(this)" style="margin-top: 3px;">
       <span style="text-align: justify; display: block; width: 100%;">
-        Check this box if billing info and shipping info are the same.
+        Check this box if your shipping info is the same as your billing info.
       </span>
 </label>
 </div>
@@ -506,7 +548,7 @@ function formatExp(input) {
 
 function checkPuzzleSelection() {
   const checkboxes = document.querySelectorAll(
-  'input[type="checkbox"][name*="_"]'
+  'input[type="checkbox"][name*="_"]:not(:disabled)'
 );
   const status = document.getElementById("puzzle-status");
 
@@ -1077,7 +1119,7 @@ function handleSameAsBilling(checkbox) {
 
 function validateForm() {
   const checkboxes = document.querySelectorAll(
-  'input[type="checkbox"][name*="_"]'
+  'input[type="checkbox"][name*="_"]:not(:disabled)'
 );
 
   const name = document.getElementById("name").value.trim();
@@ -1179,10 +1221,10 @@ emailValid &&
 </script>
 
 <div style="text-align: center; margin-top: 40px; font-size: 0.9em;">
-  ©2020 eSnale | <a href="mailto:esnale@esnale.com?subject=Question%20for%20eSnale">esnale@esnale.com</a>
+  ©2021 eSnale | <a href="mailto:esnale@esnale.com?subject=Question%20for%20eSnale">esnale@esnale.com</a>
 </div>
 
-
+<br>
 
 </body>
 </html>

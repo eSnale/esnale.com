@@ -394,7 +394,7 @@ div > div[style*="display: flex"] {
   <div style="display: flex; align-items: center;">
     <input type="text" id="zip" name="billing_zip"
       placeholder="12345"
-      maxlength="10"
+      maxlength="5"
       autocomplete="postal-code"
       onfocus="this.placeholder=''"
       oninput="this.value = this.value.replace(/[^0-9-]/g,'')"
@@ -502,7 +502,7 @@ div > div[style*="display: flex"] {
   <div style="display: flex; align-items: center;">
     <input type="text" id="shipping_zip" name="shipping_zip"
       placeholder="12345"
-      maxlength="10"
+      maxlength="5"
       autocomplete="postal-code"
       onfocus="this.placeholder=''"
       oninput="this.value = this.value.replace(/[^0-9-]/g,'')"
@@ -550,17 +550,29 @@ function formatExp(input) {
 
 function checkPuzzleSelection() {
   const checkboxes = document.querySelectorAll(
-  'input[type="checkbox"][name*="_"]:not(:disabled)'
-);
+    'input[type="checkbox"][name*="_"]:not(:disabled)'
+  );
   const status = document.getElementById("puzzle-status");
 
   let count = 0;
+  let lastChecked = null;
 
   checkboxes.forEach(cb => {
     if (cb.checked) {
       count++;
+      lastChecked = cb;
     }
   });
+
+  // HARD CAP: 36
+  if (count > 36 && lastChecked) {
+    lastChecked.checked = false;
+    count--;
+
+    status.textContent = "✖ Maximum of 36 puzzle types allowed.";
+    status.style.color = "red";
+    return;
+  }
 
   if (count === 0) {
     status.textContent = "✖ Please select up to 36 puzzle types.";
@@ -572,6 +584,7 @@ function checkPuzzleSelection() {
     status.textContent = "✔ Great choices!";
     status.style.color = "green";
   }
+
   validateForm();
 }
 
@@ -693,7 +706,7 @@ function handleEmailBlur(input) {
   const value = input.value.trim();
 
   // Basic email validation
-  const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+  const valid = /^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/.test(value);
 
   if (valid) {
     status.textContent = "✔ Email Address";
@@ -1167,7 +1180,7 @@ function validateForm() {
   const formStatus = document.getElementById("form-status");
 
   // email validation (same as before)
-  const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  const emailValid = /^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/.test(email);
 
   // checkbox count
   let checkedCount = 0;
@@ -1221,7 +1234,9 @@ emailValid &&
   }
 }
 </script>
+
 <div style="text-align: center; margin-top: 40px; font-size: 0.9em;">
+
     <!-- Button container -->
     <div class="button-container">
         <!-- Add your button links here -->
@@ -1233,8 +1248,7 @@ emailValid &&
         <a href="https://www.tumblr.com/blog/esnalepuzzles" target="_blank" title="Follow us on Tumblr!"><img src="logos/tumblr.bmp" alt="Tumblr"></a>
         <a href="https://www.deviantart.com/esnalepuzzles" target="_blank" title="Follow us on DeviantArt!"><img src="logos/deviantart.bmp" alt="DeviantArt"></a>
     </div>
-
-
+<br>
   ©2021 eSnale | <a href="mailto:esnale@esnale.com?subject=Question%20for%20eSnale">esnale@esnale.com</a>
 </div>
 
